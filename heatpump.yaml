@@ -1,0 +1,452 @@
+# Heatpump modbus config + template helpers
+# 
+#TODO:
+#  - Cleanup/reorder
+#  - Zone2 thermostat
+#  - Climate entities categorize all posible values for addr 499
+
+modbus:
+  - name: energysave_heatpump
+    type: tcp
+    #Voer hier uiteraard je IP/poort van je wifi -> modbus kastje in
+    host: 192.168.178.150
+    port: 502
+    delay: 0
+    timeout: 2
+    sensors:
+      - name: hp_software_version
+        address: 501
+        input_type: holding
+        unique_id: hp_501
+      - name: hp_database_version
+        address: 502
+        input_type: holding
+        unique_id: hp_502
+      - name: hp_338
+        address: 338
+        input_type: holding
+        unique_id: hp_338
+      - name: hp_working_mode
+        unique_id: hp_3
+        address: 3
+        scan_interval: 5
+        input_type: holding
+      - name: hp_current_working_mode
+        unique_id: hp_499
+        address: 499
+        scan_interval: 5
+        input_type: holding
+      - name: hp_water_outlet_temp
+        device_class: temperature
+        unit_of_measurement: °C
+        precision: 1
+        state_class: measurement
+        unique_id: hp_505
+        address: 505
+        scale: 0.1
+        scan_interval: 5
+        input_type: holding
+      - name: hp_water_inlet_temp
+        unit_of_measurement: °C
+        precision: 1
+        device_class: temperature
+        state_class: measurement
+        address: 506
+        unique_id: hp_506
+        scale: 0.1
+        scan_interval: 5
+        input_type: holding
+      - name: hp_indoor_coil_temp
+        unit_of_measurement: °C
+        precision: 1
+        device_class: temperature
+        state_class: measurement
+        address: 507
+        unique_id: hp_507
+        scale: 0.1
+        scan_interval: 5
+        input_type: holding
+      - name: hp_dhw_temp
+        unit_of_measurement: °C
+        precision: 1
+        device_class: temperature
+        state_class: measurement
+        unique_id: hp_508
+        address: 508
+        scale: 0.1
+        scan_interval: 5
+        input_type: holding
+      - name: hp_heating_cooling_temp
+        unit_of_measurement: °C
+        device_class: temperature
+        state_class: measurement
+        precision: 1
+        unique_id: hp_509
+        address: 509
+        scale: 0.1
+        scan_interval: 5
+        input_type: holding
+      - name: hp_current_operation
+        address: 514
+        unique_id: hp_514
+        scan_interval: 5
+        input_type: holding
+      - name: hp_compressor_speed
+        state_class: measurement
+        device_class: frequency
+        unit_of_measurement: Hz
+        address: 515
+        unique_id: hp_515
+        scan_interval: 5
+        input_type: holding
+      - name: hp_eev_opening
+        address: 516
+        unique_id: hp_516
+        input_type: holding
+      - name: hp_outside_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        precision: 1
+        scale: 0.1
+        address: 517
+        unique_id: hp_517
+        scan_interval: 5
+        input_type: holding
+      - name: hp_1h_average_outside_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        address: 518
+        precision: 5
+        unique_id: hp_518
+        input_type: holding
+      - name: hp_4h_average_outside_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        address: 519
+        precision: 1
+        unique_id: hp_519
+        input_type: holding
+      - name: hp_24h_average_outside_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 520
+        unique_id: hp_520
+        input_type: holding
+      - name: hp_fan1_rpm
+        state_class: measurement
+        unit_of_measurement: rpm
+        address: 526
+        unique_id: hp_526
+        scan_interval: 5
+        input_type: holding
+      - name: hp_amps
+        state_class: measurement
+        unit_of_measurement: A
+        device_class: current
+        scale: 0.1
+        address: 528
+        unique_id: hp_528
+        scan_interval: 5
+        input_type: holding
+      - name: hp_volts
+        state_class: measurement
+        unit_of_measurement: V
+        device_class: voltage
+        address: 529
+        unique_id: hp_529
+        scan_interval: 5
+        input_type: holding
+      - name: hp_room_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 531
+        unique_id: hp_531
+        scan_interval: 5
+        input_type: holding
+      - name: hp_zone1_setpoint
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 703
+        unique_id: hp_703
+        scan_interval: 5
+        input_type: holding
+      - name: hp_zone2_setpoint
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 704
+        unique_id: hp_704
+        scan_interval: 5
+        input_type: holding
+      - name: hp_ambient_temp_SL1
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        virtual_count: 4
+        address: 31
+        unique_id: hp_31
+        input_type: holding
+      - name: hp_set_point_SL1
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        virtual_count: 4
+        address: 36
+        unique_id: hp_36
+        input_type: holding
+      - name: hp_set_point
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        address: 44
+        unique_id: hp_44
+        input_type: holding
+    binary_sensors:
+      - name: hp_defrost_status
+        address: 526
+        unique_id: hp_526
+        input_type: holding
+      - name: hp_fp_540
+        address: 540
+        unique_id: hp_540
+        input_type: holding
+      - name: hp_fp_541
+        address: 541
+        unique_id: hp_541
+        input_type: holding
+      - name: hp_fp_542
+        address: 542
+        unique_id: hp_542
+        input_type: holding
+      - name: hp_fp_543
+        address: 543
+        unique_id: hp_543
+        input_type: holding
+      - name: hp_fp_534
+        address: 534
+        unique_id: hp_534
+        input_type: holding
+      - name: hp_fp_535
+        address: 535
+        unique_id: hp_535
+        input_type: holding
+    switches:
+      - name: hp_on_off
+        address: 0
+        unique_id: hp_0
+        write_type: holding
+      - name: hp_heating_curve
+        address: 30
+        unique_id: hp_30
+        write_type: holding
+    climates: #Does not work since 44 is not scaled but 509 is...
+      - name: hp_ts_zonder_stooklijn
+        #hvac_onoff_register: 6
+        hvac_mode_register:
+          address: 6
+          values:
+            state_off: 0
+            state_heat: 1
+        precision: 1
+        temp_step: 1
+        max_temp: 55
+        min_temp: 25
+        unique_id: hp_509_ts
+        address: 509
+        target_temp_register: 44
+        current_temp_scale: 0.1
+        target_temp_scale: 1.0
+        scan_interval: 5
+        input_type: holding
+        hvac_action_register:
+          address: 499
+          values:
+            action_idle: #todo: mapping is not complete.... timer active is not represented
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 32
+              - 33
+              - 34
+              - 35
+              - 36
+              - 37
+              - 38
+              - 39
+            action_heating: #16 - 23
+              - 16
+              - 17
+              - 18
+              - 19
+              - 20
+              - 21
+              - 22
+              - 23
+      - name: hp_ts_koelen
+        #hvac_onoff_register: 7
+        hvac_mode_register:
+          address: 7
+          values:
+            state_off: 0
+            state_cool: 1
+        precision: 1
+        temp_step: 1
+        max_temp: 25
+        min_temp: 7
+        unique_id: hp_509_ts_2
+        address: 509
+        target_temp_register: 29
+        current_temp_scale: 0.1
+        target_temp_scale: 1.0
+        scan_interval: 5
+        input_type: holding
+        hvac_action_register:
+          address: 499
+          values:
+            action_idle: #todo: mapping is not complete.... timer active is not represented
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 16
+              - 17
+              - 18
+              - 19
+              - 20
+              - 21
+              - 22
+              - 23
+            action_cooling: #32 - 39
+              - 32
+              - 33
+              - 34
+              - 35
+              - 36
+              - 37
+              - 38
+              - 39
+      - name: hp_ts_tapwater
+        hvac_mode_register:
+          address: 5
+          values:
+            state_off: 0
+            state_heat: 1
+        precision: 1
+        temp_step: 1
+        max_temp: 75
+        min_temp: 25
+        unique_id: hp_508_ts
+        address: 508
+        target_temp_register: 64
+        current_temp_scale: 0.1
+        target_temp_scale: 1.0
+        scan_interval: 5
+        input_type: holding
+        hvac_action_register:
+          address: 499
+          values:
+            action_idle: #todo: mapping is not complete.... timer active is not represented
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 16
+              - 17
+              - 18
+              - 19
+              - 20
+              - 21
+              - 22
+              - 23
+              - 32
+              - 33
+              - 34
+              - 35
+              - 36
+              - 37
+              - 38
+              - 39
+            action_heating:
+              - 8
+              - 9
+              - 10
+              - 11
+              - 12
+              - 13
+              - 14
+              - 15
+
+template:
+  - binary_sensor:
+      - name: "hp_dhw_enabled"
+        unique_id: hp_499_bitmap_0
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(1)  }}"
+  - binary_sensor:
+      - name: "hp_heating_enabled"
+        unique_id: hp_499_bitmap_1
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(2)  }}"
+  - binary_sensor:
+      - name: "hp_cooling_enabled"
+        unique_id: hp_499_bitmap_2
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(4)  }}"
+  - binary_sensor:
+      - name: "hp_dhw_active"
+        unique_id: hp_499_bitmap_3
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(8)  }}"
+  - binary_sensor:
+      - name: "hp_heating_active"
+        unique_id: hp_499_bitmap_4
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(16)  }}"
+  - binary_sensor:
+      - name: "hp_cooling_active"
+        unique_id: hp_499_bitmap_5
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(32)  }}"
+  - binary_sensor:
+      - name: "hp_timer_active"
+        unique_id: hp_499_bitmap_6
+        state: "{{ states('sensor.hp_current_working_mode') |int  |bitwise_and(64)  }}"
+  - sensor:
+      - name: "hp_stooklijn"
+        unique_id: "hp_stooklinsd"
+        state: "{{ states('sensor.hp_set_point_sl1') }}"
+        attributes:
+          buiten: "{{ states('sensor.hp_1h_average_outside_temp') }}"
+          sl1sp_0: "{{ states('sensor.hp_set_point_sl1') }}"
+          sl1sp_1: "{{ states('sensor.hp_set_point_sl1_1') }}"
+          sl1sp_2: "{{ states('sensor.hp_set_point_sl1_2') }}"
+          sl1sp_3: "{{ states('sensor.hp_set_point_sl1_3') }}"
+          sl1sp_4: "{{ states('sensor.hp_set_point_sl1_4') }}"
+          sl1at_0: "{{ states('sensor.hp_ambient_temp') }}"
+          sl1at_1: "{{ states('sensor.hp_ambient_temp_1') }}"
+          sl1at_2: "{{ states('sensor.hp_ambient_temp_2') }}"
+          sl1at_3: "{{ states('sensor.hp_ambient_temp_3') }}"
+          sl1at_4: "{{ states('sensor.hp_ambient_temp_4') }}"
