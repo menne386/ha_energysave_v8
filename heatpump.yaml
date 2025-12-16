@@ -4,11 +4,9 @@
 #  - Cleanup/reorder
 #  - Zone2 thermostat
 #  - Climate entities categorize all posible values for addr 499
-
 modbus:
   - name: energysave_heatpump
     type: tcp
-    #Voer hier uiteraard je IP/poort van je wifi -> modbus kastje in
     host: 192.168.178.150
     port: 502
     delay: 0
@@ -255,9 +253,8 @@ modbus:
         address: 30
         unique_id: hp_30
         write_type: holding
-    climates: #Does not work since 44 is not scaled but 509 is...
+    climates:
       - name: hp_ts_zonder_stooklijn
-        #hvac_onoff_register: 6
         hvac_mode_register:
           address: 6
           values:
@@ -277,7 +274,7 @@ modbus:
         hvac_action_register:
           address: 499
           values:
-            action_idle: #todo: mapping is not complete.... timer active is not represented
+            action_idle:
               - 0
               - 1
               - 2
@@ -286,25 +283,40 @@ modbus:
               - 5
               - 6
               - 7
-              - 32
-              - 33
-              - 34
-              - 35
+              - 64
+              - 65
+              - 66
+              - 67
+              - 68
+              - 69
+              - 70
+              - 71
+              - 9
+              - 11
+              - 13
+              - 15
+              - 73
+              - 75
+              - 77
+              - 79
               - 36
               - 37
               - 38
               - 39
-            action_heating: #16 - 23
-              - 16
-              - 17
+              - 100
+              - 101
+              - 102
+              - 103
+            action_heating:
               - 18
               - 19
-              - 20
-              - 21
               - 22
               - 23
+              - 82
+              - 83
+              - 86
+              - 87
       - name: hp_ts_koelen
-        #hvac_onoff_register: 7
         hvac_mode_register:
           address: 7
           values:
@@ -324,7 +336,7 @@ modbus:
         hvac_action_register:
           address: 499
           values:
-            action_idle: #todo: mapping is not complete.... timer active is not represented
+            action_idle:
               - 0
               - 1
               - 2
@@ -333,23 +345,39 @@ modbus:
               - 5
               - 6
               - 7
-              - 16
-              - 17
+              - 64
+              - 65
+              - 66
+              - 67
+              - 68
+              - 69
+              - 70
+              - 71
+              - 9
+              - 11
+              - 13
+              - 15
+              - 73
+              - 75
+              - 77
+              - 79
               - 18
               - 19
-              - 20
-              - 21
               - 22
               - 23
-            action_cooling: #32 - 39
-              - 32
-              - 33
-              - 34
-              - 35
+              - 82
+              - 83
+              - 86
+              - 87
+            action_cooling:
               - 36
               - 37
               - 38
               - 39
+              - 100
+              - 101
+              - 102
+              - 103
       - name: hp_ts_tapwater
         hvac_mode_register:
           address: 5
@@ -370,7 +398,7 @@ modbus:
         hvac_action_register:
           address: 499
           values:
-            action_idle: #todo: mapping is not complete.... timer active is not represented
+            action_idle:
               - 0
               - 1
               - 2
@@ -379,32 +407,39 @@ modbus:
               - 5
               - 6
               - 7
-              - 16
-              - 17
+              - 64
+              - 65
+              - 66
+              - 67
+              - 68
+              - 69
+              - 70
+              - 71
               - 18
               - 19
-              - 20
-              - 21
               - 22
               - 23
-              - 32
-              - 33
-              - 34
-              - 35
+              - 82
+              - 83
+              - 86
+              - 87
               - 36
               - 37
               - 38
               - 39
+              - 100
+              - 101
+              - 102
+              - 103
             action_heating:
-              - 8
               - 9
-              - 10
               - 11
-              - 12
               - 13
-              - 14
               - 15
-
+              - 73
+              - 75
+              - 77
+              - 79
 template:
   - binary_sensor:
       - name: "hp_dhw_enabled"
