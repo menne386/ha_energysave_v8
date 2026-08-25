@@ -3,11 +3,11 @@
 #TODO:
 #  - Cleanup/reorder
 #  - Zone2 thermostat
-#  - Climate entities categorize all posible values for addr 499
+#  - Climate entities categorize all posible values for addr 500
 modbus:
   - name: energysave_heatpump
     type: tcp
-    host: 192.168.178.150
+    host: 10.1.0.139
     port: 502
     delay: 0
     timeout: 2
@@ -138,6 +138,42 @@ modbus:
         address: 520
         unique_id: hp_520
         input_type: holding
+      - name: hp_highpressure
+        state_class: measurement
+        device_class: pressure
+        unit_of_measurement: bar
+        scale: 0.1
+        precision: 1
+        address: 521
+        unique_id: hp_521
+        input_type: holding
+      - name: hp_lowpressure
+        state_class: measurement
+        device_class: pressure
+        unit_of_measurement: bar
+        scale: 0.1
+        precision: 1
+        address: 522
+        unique_id: hp_522
+        input_type: holding
+      - name: hp_discharge_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 523
+        unique_id: hp_523
+        input_type: holding
+      - name: hp_suction_temp
+        state_class: measurement
+        device_class: temperature
+        unit_of_measurement: °C
+        scale: 0.1
+        precision: 1
+        address: 524
+        unique_id: hp_524
+        input_type: holding
       - name: hp_fan1_rpm
         state_class: measurement
         unit_of_measurement: rpm
@@ -263,7 +299,7 @@ modbus:
         precision: 1
         temp_step: 1
         max_temp: 55
-        min_temp: 25
+        min_temp: 18
         unique_id: hp_509_ts
         address: 509
         target_temp_register: 44
@@ -386,8 +422,8 @@ modbus:
             state_heat: 1
         precision: 1
         temp_step: 1
-        max_temp: 75
-        min_temp: 25
+        max_temp: 65
+        min_temp: 18
         unique_id: hp_508_ts
         address: 508
         target_temp_register: 64
